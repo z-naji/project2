@@ -1,0 +1,60 @@
+---
+title: "project2"
+author: "Zahra Naji"
+date: "`r Sys.Date()`"
+output: html_document
+---
+```{r}
+#Answer1
+n<-5 #تعداد پرتاب ها
+p<-0.5 #احتمال شیر در هر پرتاب
+#احتمال اینکه4بار شیر مشاهده شود
+prob_4_heads<-dbinom(4,size=n,prob=p)
+cat("احتمال مشاهده4شیر",prob_4_heads,"\n")
+# احتمال اینکه حداقل 3 شیر مشاهده شود
+prob_at_least_3_heads <- sum(dbinom(3:5, size = n, prob = p))
+cat("احتمال مشاهده حداقل 3 شیر:", prob_at_least_3_heads, "\n")
+# احتمال اینکه هیچ شیر مشاهده نشود
+prob_no_heads <- dbinom(0, size = n, prob = p)
+cat("احتمال مشاهده هیچ شیر:", prob_no_heads, "\n")
+```
+```{r}
+
+#Answer2
+# شبیه سازی دو پرتاب تاس
+set.seed(123)  # بازتولیدپذیری نتایج
+n_sim <- 100000  # تعداد شبیه سازی ها
+# شبیه سازی اعداد تصادفی برای دو تاس
+X1 <- sample(1:6, n_sim, replace = TRUE)
+X2 <- sample(1:6, n_sim, replace = TRUE)
+# محاسبه کمینه
+Y <- pmin(X1, X2)
+# احتمال Y < 5
+prob_Y_less_5 <- mean(Y < 5)
+cat("احتمال اینکه Y کمتر از 5 باشد:", prob_Y_less_5, "\n")
+# احتمال Y برابر با 1
+prob_Y_equals_1 <- mean(Y == 1)
+cat("احتمال اینکه Y برابر با 1 باشد:", prob_Y_equals_1, "\n")
+# احتمال Y حداکثر 2 باشد
+prob_Y_max_2 <- mean(Y <= 2)
+cat("احتمال اینکه Y حداکثر 2 باشد:", prob_Y_max_2, "\n")
+
+```
+
+```{r}
+#Answer3
+# پارامترها
+total_marbles <- 5 + 7 + 12  # کل مهره ها
+white_marbles <- 5           # تعداد مهره های سفید
+# احتمال هر دو مهره سفید باشند (با جایگذاری)
+prob_both_white_with_replacement <- (white_marbles / total_marbles) * (white_marbles / total_marbles)
+cat("احتمال انتخاب دو مهره سفید (با جایگذاری):", prob_both_white_with_replacement, "\n")
+# احتمال هر دو مهره سفید باشند (بدون جایگذاری)
+prob_both_white_no_replacement <- (white_marbles / total_marbles) * ((white_marbles - 1) / (total_marbles - 1))
+cat("احتمال انتخاب دو مهره سفید (بدون جایگذاری):", prob_both_white_no_replacement, "\n")
+
+# احتمال رنگ مهره ها یکسان نباشد (با جایگذاری)
+prob_diff_colors_with_replacement <- 1 - prob_both_white_with_replacement
+cat("احتمال رنگ مهره ها متفاوت باشند (با جایگذاری):", prob_diff_colors_with_replacement, "\n")
+```
+
